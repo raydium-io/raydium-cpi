@@ -29,7 +29,10 @@ pub mod openbook_program_id {
     anchor_lang::declare_id!("EoTcMgcDRTJVZDMZWBoU6rhYHZfkNTVEAfz3uUJRcYGj");
 }
 
-declare_id!("675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8");
+#[cfg(feature = "devnet")]
+solana_program::declare_id!("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8");
+#[cfg(not(feature = "devnet"))]
+solana_program::declare_id!("675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8");
 
 /// The AMM program
 #[derive(Clone)]
