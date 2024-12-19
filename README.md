@@ -31,4 +31,4 @@ anchor-spl = "=0.29.0"
 raydium-amm-cpi = { git = "https://github.com:raydium-io/raydium-cpi", package = "raydium-amm-cpi", branch = "anchor-0.29.0" }
 ```
 
-You can find usage examples in this [repository](https://github.com/raydium-io/raydium-cpi-example).
+You can find usage examples in this [repository](https://github.com/raydium-io/raydium-cpi-example/tree/anchor-0.29.0).
