@@ -172,7 +172,7 @@ pub struct CollectClmmFeeAndReward<'info> {
 
     /// Decrease liquidity for this position
     #[account(
-        mut, 
+        mut,
         address = locked_position.position_id,
         constraint = personal_position.pool_id == pool_state.key()
     )]
@@ -309,14 +309,15 @@ pub struct LockCpLiquidity<'info> {
 
     /// Store the locked information of liquidity
     #[account(
-        init,
-        seeds = [
-            LOCKED_LIQUIDITY_SEED.as_bytes(),
-            fee_nft_mint.key().as_ref(),
-        ],
-        bump,
-        payer = payer,
-        space = LockedCpLiquidityState::LEN
+        mut
+        // init,
+        // seeds = [
+        //     LOCKED_LIQUIDITY_SEED.as_bytes(),
+        //     fee_nft_mint.key().as_ref(),
+        // ],
+        // bump,
+        // payer = payer,
+        // space = LockedCpLiquidityState::LEN
     )]
     pub locked_liquidity: Box<Account<'info, LockedCpLiquidityState>>,
 
