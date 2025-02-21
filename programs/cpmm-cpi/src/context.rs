@@ -39,7 +39,7 @@ pub struct Initialize<'info> {
 
     /// Token_0 mint, the key must smaller then token_1 mint.
     #[account(
-        constraint = token_0_mint.key() < token_1_mint.key(),
+        // constraint = token_0_mint.key() < token_1_mint.key(),
         mint::token_program = token_0_program,
     )]
     pub token_0_mint: Box<InterfaceAccount<'info, Mint>>,
@@ -68,16 +68,16 @@ pub struct Initialize<'info> {
     /// payer token0 account
     #[account(
         mut,
-        token::mint = token_0_mint,
-        token::authority = creator,
+        // token::mint = token_0_mint,
+        // token::authority = creator,
     )]
     pub creator_token_0: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// creator token1 account
     #[account(
         mut,
-        token::mint = token_1_mint,
-        token::authority = creator,
+        // token::mint = token_1_mint,
+        // token::authority = creator,
     )]
     pub creator_token_1: Box<InterfaceAccount<'info, TokenAccount>>,
 
@@ -94,24 +94,24 @@ pub struct Initialize<'info> {
     /// CHECK: Token_0 vault for the pool,init by contract
     #[account(
         mut,
-        seeds = [
-            POOL_VAULT_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            token_0_mint.key().as_ref()
-        ],
-        bump,
+        // seeds = [
+        //     POOL_VAULT_SEED.as_bytes(),
+        //     pool_state.key().as_ref(),
+        //     token_0_mint.key().as_ref()
+        // ],
+        // bump,
     )]
     pub token_0_vault: UncheckedAccount<'info>,
 
     /// CHECK: Token_1 vault for the pool, init by contract
     #[account(
         mut,
-        seeds = [
-            POOL_VAULT_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            token_1_mint.key().as_ref()
-        ],
-        bump,
+        // seeds = [
+        //     POOL_VAULT_SEED.as_bytes(),
+        //     pool_state.key().as_ref(),
+        //     token_1_mint.key().as_ref()
+        // ],
+        // bump,
     )]
     pub token_1_vault: UncheckedAccount<'info>,
 
@@ -246,7 +246,7 @@ pub struct Withdraw<'info> {
 
     /// Owner lp token account
     #[account(
-        mut, 
+        mut,
         token::authority = owner
     )]
     pub owner_lp_token: Box<InterfaceAccount<'info, TokenAccount>>,
