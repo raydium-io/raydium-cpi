@@ -2,32 +2,33 @@ Raydium CPI adapters are suitable for different Anchor versions. For the stabili
 
 ## Environmental requirements
 ```
+rustc 1.86.0
 solana-cli 2.1.0
-anchor-cli 0.31.0
+anchor-cli 0.31.1
 ```
 
 ## Usage
 Call CLMM through CPI.
 ```
 [dependencies]
-anchor-lang = "=0.31.0"
-anchor-spl = "=0.31.0"
+anchor-lang = "=0.31.1"
+anchor-spl = "=0.31.1"
 raydium-clmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-clmm-cpi" }
 ```
 
 Call CPMM through CPI.
 ```
 [dependencies]
-anchor-lang = "=0.31.0"
-anchor-spl = "=0.31.0"
+anchor-lang = "=0.31.1"
+anchor-spl = "=0.31.1"
 raydium-cpmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-cpmm-cpi"}
 ```
 
 Call AMM through CPI.
 ```
 [dependencies]
-anchor-lang = "=0.31.0"
-anchor-spl = "=0.31.0"
+anchor-lang = "=0.31.1"
+anchor-spl = "=0.31.1"
 raydium-amm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-amm-cpi" }
 ```
 
