@@ -1182,6 +1182,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "raydium-launch-cpi"
+version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+ "anchor-spl",
+]
+
+[[package]]
 name = "raydium-locking-cpi"
 version = "0.1.0"
 dependencies = [

@@ -1,0 +1,23 @@
+[package]
+name = "raydium-launch-cpi"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "raydium_launch_cpi"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = ["cpi"]
+devnet = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[dependencies]
+anchor-lang = { version = "=0.31.0", features = ["init-if-needed","event-cpi"] }
+anchor-spl = { version = "=0.31.0", features = ["metadata"] }
+
