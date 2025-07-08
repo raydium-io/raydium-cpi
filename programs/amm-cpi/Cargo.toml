@@ -20,4 +20,4 @@ idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
 
 [dependencies]
 anchor-lang = "=0.31.0"
-anchor-spl = { version = "=0.31.0", default-features = false, features = ["token"] }
+anchor-spl = { version = "=0.31.0", features = ["token", "associated_token", "token_2022", "token_interface", "memo"] }
