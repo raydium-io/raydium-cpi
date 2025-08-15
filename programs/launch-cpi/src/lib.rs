@@ -8,14 +8,14 @@ pub use states::*;
 
 use anchor_lang::prelude::*;
 #[cfg(feature = "devnet")]
-declare_id!("LanD8FpTBBvzZFXjTxsAoipkFsxPUCDB4qAqKxYDiNP");
+declare_id!("DRay6fNdQ5J82H7xV6uq2aV3mNrUZ1J4PgSKsWgptcm6");
 #[cfg(not(feature = "devnet"))]
 declare_id!("LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj");
 
 pub mod admin {
     use super::{pubkey, Pubkey};
     #[cfg(feature = "devnet")]
-    pub const ID: Pubkey = pubkey!("adMCyoCgfkg7bQiJ9aBJ59H3BXLY3r5LNLfPpQfMzBe");
+    pub const ID: Pubkey = pubkey!("DRayqG9RXYi8WHgWEmRQGrUWRWbhjYWYkCRJDd6JBBak");
     #[cfg(not(feature = "devnet"))]
     pub const ID: Pubkey = pubkey!("GThUX1Atko4tqhN2NaiTazWSeFWMuiUvfFnyJyUghFMJ");
 }
@@ -31,7 +31,7 @@ pub mod openbook_program {
 pub mod amm_program {
     use super::{pubkey, Pubkey};
     #[cfg(feature = "devnet")]
-    pub const ID: Pubkey = pubkey!("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8");
+    pub const ID: Pubkey = pubkey!("DRaya7Kj3aMWQSy19kSjvmuwq9docCHofyP9kanQGaav");
     #[cfg(not(feature = "devnet"))]
     pub const ID: Pubkey = pubkey!("675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8");
 }
@@ -39,7 +39,7 @@ pub mod amm_program {
 pub mod cpswap_program {
     use super::{pubkey, Pubkey};
     #[cfg(feature = "devnet")]
-    pub const ID: Pubkey = pubkey!("CPMDWBwJDtYax9qW7AyRuVC19Cc4L4Vcy4n2BHAbHkCW");
+    pub const ID: Pubkey = pubkey!("DRaycpLY18LhpbydsBWbVJtxpNv9oXPgjRSfpF2bWpYb");
     #[cfg(not(feature = "devnet"))]
     pub const ID: Pubkey = pubkey!("CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C");
 }
@@ -47,7 +47,7 @@ pub mod cpswap_program {
 pub mod lock_program {
     use super::{pubkey, Pubkey};
     #[cfg(feature = "devnet")]
-    pub const ID: Pubkey = pubkey!("DLockwT7X7sxtLmGH9g5kmfcjaBtncdbUmi738m5bvQC");
+    pub const ID: Pubkey = pubkey!("DRay25Usp3YJAi7beckgpGUC7mGJ2cR1AVPxhYfwVCUX");
     #[cfg(not(feature = "devnet"))]
     pub const ID: Pubkey = pubkey!("LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE");
 }
