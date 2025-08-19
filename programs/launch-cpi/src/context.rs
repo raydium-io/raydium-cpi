@@ -152,6 +152,7 @@ pub struct Initialize<'info> {
 pub struct Swap<'info> {
     /// The user performing the swap operation
     /// Must sign the transaction and pay for fees
+    #[account(mut)]
     pub payer: Signer<'info>,
 
     /// PDA that acts as the authority for pool vault operations
