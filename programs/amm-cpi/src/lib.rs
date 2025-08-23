@@ -18,7 +18,7 @@ pub mod create_pool_fee_address {
     #[cfg(not(any(feature = "devnet")))]
     anchor_lang::declare_id!("7YttLkHDoNj9wyDur5pM1ejNaAvT9X4eqaYcHQqtj2G5");
     #[cfg(feature = "devnet")]
-    anchor_lang::declare_id!("3XMrhbv989VxAMi3DErLV9eJht1pHppW5LbKxe9fkEFR");
+    anchor_lang::declare_id!("9y8ENuuZ3b19quffx9hQvRVygG5ky6snHfRvGpuSfeJy");
 }
 
 /// openbook program id
@@ -30,7 +30,7 @@ pub mod openbook_program_id {
 }
 
 #[cfg(feature = "devnet")]
-anchor_lang::declare_id!("HWy1jotHpo6UqeQxx49dpYYdQB8wj9Qk9MdxwjLvDHB8");
+anchor_lang::declare_id!("DRaya7Kj3aMWQSy19kSjvmuwq9docCHofyP9kanQGaav");
 #[cfg(not(feature = "devnet"))]
 anchor_lang::declare_id!("675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8");
 
