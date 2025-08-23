@@ -159,20 +159,8 @@ pub struct OpenPosition<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    /// Store the information of market marking in range
-    #[account(
-        init_if_needed,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_lower_index.to_be_bytes(),
-            &tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        payer = payer,
-        space = ProtocolPositionState::LEN
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// CHECK: Account to store data for the position's lower tick
     #[account(
@@ -306,20 +294,8 @@ pub struct OpenPositionV2<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    /// Store the information of market marking in range
-    #[account(
-        init_if_needed,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_lower_index.to_be_bytes(),
-            &tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        payer = payer,
-        space = ProtocolPositionState::LEN
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// CHECK: Account to store data for the position's lower tick
     #[account(
@@ -442,20 +418,8 @@ pub struct OpenPositionWithToken22Nft<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    /// Store the information of market marking in range
-    #[account(
-        init_if_needed,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_lower_index.to_be_bytes(),
-            &tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        payer = payer,
-        space = ProtocolPositionState::LEN
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// CHECK:  Account to store data for the position's lower tick
     #[account(
@@ -616,18 +580,8 @@ pub struct IncreaseLiquidity<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    #[account(
-        mut,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &personal_position.tick_lower_index.to_be_bytes(),
-            &personal_position.tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        constraint = protocol_position.pool_id == pool_state.key(),
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// Increase liquidity for this position
     #[account(mut, constraint = personal_position.pool_id == pool_state.key())]
@@ -697,18 +651,8 @@ pub struct IncreaseLiquidityV2<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    #[account(
-        mut,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &personal_position.tick_lower_index.to_be_bytes(),
-            &personal_position.tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        constraint = protocol_position.pool_id == pool_state.key(),
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// Increase liquidity for this position
     #[account(mut, constraint = personal_position.pool_id == pool_state.key())]
@@ -797,18 +741,8 @@ pub struct DecreaseLiquidity<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    #[account(
-        mut,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &personal_position.tick_lower_index.to_be_bytes(),
-            &personal_position.tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        constraint = protocol_position.pool_id == pool_state.key(),
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// Token_0 vault
     #[account(
@@ -878,18 +812,8 @@ pub struct DecreaseLiquidityV2<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    #[account(
-        mut,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &personal_position.tick_lower_index.to_be_bytes(),
-            &personal_position.tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        constraint = protocol_position.pool_id == pool_state.key(),
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// Token_0 vault
     #[account(
