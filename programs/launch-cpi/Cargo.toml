@@ -1,7 +1,7 @@
 [package]
 name = "raydium-launch-cpi"
 version = "0.1.0"
-description = "Created with Anchor"
+description = "CPI adapter for Raydium Launch"
 edition = "2021"
 
 [lib]
@@ -18,6 +18,6 @@ devnet = []
 idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
 
 [dependencies]
-anchor-lang = { version = "=0.31.0", features = ["init-if-needed","event-cpi"] }
-anchor-spl = { version = "=0.31.0", features = ["metadata"] }
+anchor-lang = "=0.31.0"
+anchor-spl = { version = "=0.31.0", default-features = false, features = ["token"] }
 

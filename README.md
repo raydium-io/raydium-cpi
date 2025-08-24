@@ -12,7 +12,7 @@ Call CLMM through CPI.
 [dependencies]
 anchor-lang = "=0.31.0"
 anchor-spl = "=0.31.0"
-raydium-clmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-clmm-cpi", branch = "anchor-0.31.0" }
+raydium-clmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-clmm-cpi" }
 ```
 
 Call CPMM through CPI.
@@ -20,7 +20,7 @@ Call CPMM through CPI.
 [dependencies]
 anchor-lang = "=0.31.0"
 anchor-spl = "=0.31.0"
-raydium-cpmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-cpmm-cpi", branch = "anchor-0.31.0" }
+raydium-cpmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-cpmm-cpi"}
 ```
 
 Call AMM through CPI.
@@ -28,7 +28,7 @@ Call AMM through CPI.
 [dependencies]
 anchor-lang = "=0.31.0"
 anchor-spl = "=0.31.0"
-raydium-amm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-amm-cpi", branch = "anchor-0.31.0" }
+raydium-amm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-amm-cpi" }
 ```
 
 Call Launchpad through CPI.
