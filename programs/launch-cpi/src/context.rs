@@ -10,6 +10,14 @@ use anchor_spl::{
 };
 use std::ops::{Deref, DerefMut};
 
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct TransferFeeExtensionParams {
+    /// denominator is 10000, currently, this value cannot exceed 5%, which is 500.
+    transfer_fee_basis_points: u16,
+    /// Maximum fee on each transfers, the value must exceed supply * transfer_fee_basis_points / 10000
+    pub maximum_fee: u64,
+}
+
 /// Accounts required for initializing a new trading pool
 #[event_cpi]
 #[derive(Accounts)]
