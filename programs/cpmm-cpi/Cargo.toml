@@ -18,5 +18,5 @@ devnet = []
 idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
 
 [dependencies]
-anchor-lang = { version = "=0.31.0", features = ["init-if-needed"] }
-anchor-spl = { version = "=0.31.0", features = ["metadata", "memo"] }
+anchor-lang = { version = "=0.31.1", features = ["init-if-needed"] }
+anchor-spl = { version = "=0.31.1", features = ["metadata", "memo"] }
