@@ -72,6 +72,37 @@ pub mod raydium_launchpad {
         Ok(())
     }
 
+    /// Initializes a new trading pool
+    /// # Arguments
+    ///
+    /// * `ctx` - The context of accounts containing pool and token information
+    ///
+    pub fn initialize_v2(
+        ctx: Context<InitializeV2>,
+        base_mint_param: MintParams,
+        curve_param: CurveParams,
+        vesting_param: VestingParams,
+        amm_fee_on: AmmCreatorFeeOn,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    /// Initializes a new trading pool with base token belongs to spl-token-2022,
+    /// pool created by this instruction must be migrated to cpswap after fundraising ends, i.e., curve_param.migrate_type = 1
+    /// # Arguments
+    ///
+    /// * `ctx` - The context of accounts containing pool and token information
+    ///
+    pub fn initialize_with_token_2022(
+        ctx: Context<InitializeWithToken2022>,
+        base_mint_param: MintParams,
+        curve_param: CurveParams,
+        vesting_param: VestingParams,
+        amm_fee_on: AmmCreatorFeeOn,
+        transfer_fee_extension_param: Option<TransferFeeExtensionParams>,
+    ) -> Result<()> {
+        Ok(())
+    }
     /// Use the given amount of quote tokens to purchase base tokens.
     /// # Arguments
     ///
@@ -184,6 +215,15 @@ pub mod raydium_launchpad {
         Ok(())
     }
 
+    /// Claim the fee from the exclusive platform fee vault.
+    /// # Arguments
+    ///
+    /// * `ctx` - The context of accounts
+    ///
+    pub fn claim_platform_fee_from_vault(ctx: Context<ClaimPlatformFeeFromVault>) -> Result<()> {
+        Ok(())
+    }
+
     /// Update platform config
     /// # Arguments
     ///
@@ -194,6 +234,42 @@ pub mod raydium_launchpad {
         ctx: Context<UpdatePlatformConfig>,
         param: PlatformConfigParam,
     ) -> Result<()> {
+        Ok(())
+    }
+
+    /// Update platform launch param
+    /// # Arguments
+    ///
+    /// * `ctx` - The context of accounts
+    /// * `bonding_curve_param` - Parameter to update
+    ///
+    pub fn update_platform_curve_param(
+        ctx: Context<UpdatePlatformCurveParam>,
+        index: u8,
+        bonding_curve_param: BondingCurveParam,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    /// Remove platform launch param
+    /// # Arguments
+    ///
+    /// * `ctx` - The context of accounts
+    /// * `index` - The index of the curve param to remove
+    ///
+    pub fn remove_platform_curve_param(
+        ctx: Context<RemovePlatformCurveParam>,
+        index: u8,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    /// Claim the fee from the exclusive creator fee vault.
+    /// # Arguments
+    ///
+    /// * `ctx` - The context of accounts
+    ///
+    pub fn claim_creator_fee(ctx: Context<ClaimCreatorFee>) -> Result<()> {
         Ok(())
     }
 }

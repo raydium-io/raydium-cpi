@@ -66,7 +66,7 @@ pub struct LockClmmPosition<'info> {
         // associated_token::token_program = locked_nft_token_program,
         // payer = payer,
     )]
-    pub locked_nft_account:UncheckedAccount<'info>,
+    pub locked_nft_account: UncheckedAccount<'info>,
 
     ///  Store the locked information of the personal position
     #[account(
@@ -181,19 +181,8 @@ pub struct CollectClmmFeeAndReward<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    #[account(
-        mut,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &personal_position.tick_lower_index.to_be_bytes(),
-            &personal_position.tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        constraint = protocol_position.pool_id == pool_state.key(),
-        seeds::program = clmm_program.key(),
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    /// CHECK: Deprecated: protocol_position is deprecated and kept for compatibility.
+    pub protocol_position: UncheckedAccount<'info>,
 
     /// The address that holds pool tokens for token_0
     #[account(
@@ -293,8 +282,8 @@ pub struct LockCpLiquidity<'info> {
     )]
     pub fee_nft_mint: Box<InterfaceAccount<'info, Mint>>,
 
-     /// CHECK: Token account where fee nft will be minted to, init by locking program
-     #[account(
+    /// CHECK: Token account where fee nft will be minted to, init by locking program
+    #[account(
         mut,
         // init,
         // associated_token::mint = fee_nft_mint,

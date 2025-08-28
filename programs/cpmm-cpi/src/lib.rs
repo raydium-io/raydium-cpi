@@ -3,6 +3,7 @@
 pub mod context;
 pub mod states;
 pub use context::*;
+pub use states::*;
 
 use anchor_lang::prelude::*;
 
@@ -47,6 +48,26 @@ pub mod raydium_cpmm {
         init_amount_0: u64,
         init_amount_1: u64,
         open_time: u64,
+    ) -> Result<()> {
+        Ok(())
+    }
+
+    /// Create a pool with permission
+    ///
+    /// # Arguments
+    ///
+    /// * `ctx`- The context of accounts
+    /// * `init_amount_0` - the initial amount_0 to deposit
+    /// * `init_amount_1` - the initial amount_1 to deposit
+    /// * `open_time` - the timestamp allowed for swap
+    /// * `creator_fee_on` - creator fee model, 0：both token0 and token1 (depends on the input), 1: only token0, 2: only token1
+    ///
+    pub fn initialize_with_permission(
+        ctx: Context<InitializeWithPermission>,
+        init_amount_0: u64,
+        init_amount_1: u64,
+        open_time: u64,
+        creator_fee_on: CreatorFeeOn,
     ) -> Result<()> {
         Ok(())
     }
@@ -112,6 +133,16 @@ pub mod raydium_cpmm {
     /// * `amount_out` -  amount of output token
     ///
     pub fn swap_base_output(ctx: Context<Swap>, max_amount_in: u64, amount_out: u64) -> Result<()> {
+        Ok(())
+    }
+
+    /// Collect the creator fee
+    ///
+    /// # Arguments
+    ///
+    /// * `ctx` - The context of accounts
+    ///
+    pub fn collect_creator_fee(ctx: Context<CollectCreatorFee>) -> Result<()> {
         Ok(())
     }
 }

@@ -5,6 +5,7 @@ pub const POOL_LP_MINT_SEED: &str = "pool_lp_mint";
 pub const POOL_VAULT_SEED: &str = "pool_vault";
 pub const OBSERVATION_SEED: &str = "observation";
 pub const AMM_CONFIG_SEED: &str = "amm_config";
+pub const PERMISSION_SEED: &str = "permission";
 
 // Number of ObservationState element
 pub const OBSERVATION_NUM: usize = 100;
@@ -34,8 +35,10 @@ pub struct AmmConfig {
     pub protocol_owner: Pubkey,
     /// Address of the fund fee owner
     pub fund_owner: Pubkey,
+    /// The pool creator fee, denominated in hundredths of a bip (10^-6)
+    pub creator_fee_rate: u64,
     /// padding
-    pub padding: [u64; 16],
+    pub padding: [u64; 15],
 }
 
 pub enum PoolStatusBitIndex {
@@ -48,6 +51,35 @@ pub enum PoolStatusBitIndex {
 pub enum PoolStatusBitFlag {
     Enable,
     Disable,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug, PartialEq, Eq)]
+pub enum CreatorFeeOn {
+    /// Both token0 and token1 can be used as trade fees.
+    /// It depends on what the input token is.
+    BothToken,
+    /// Only token0 can be used as trade fees.
+    OnlyToken0,
+    /// Only token1 can be used as trade fees.
+    OnlyToken1,
+}
+
+/// The direction of a trade, since curves can be specialized to treat each
+/// token differently (by adding offsets or weights)
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum TradeDirection {
+    /// Input token 0, output token 1
+    ZeroForOne,
+    /// Input token 1, output token 0
+    OneForZero,
+}
+pub struct SwapParams {
+    pub trade_direction: TradeDirection,
+    pub total_input_token_amount: u64,
+    pub total_output_token_amount: u64,
+    pub token_0_price_x64: u128,
+    pub token_1_price_x64: u128,
+    pub is_creator_fee_on_input: bool,
 }
 
 #[account(zero_copy(unsafe))]
@@ -81,9 +113,9 @@ pub struct PoolState {
 
     pub auth_bump: u8,
     /// Bitwise representation of the state of the pool
-    /// bit0, 1: disable deposit(vaule is 1), 0: normal
-    /// bit1, 1: disable withdraw(vaule is 2), 0: normal
-    /// bit2, 1: disable swap(vaule is 4), 0: normal
+    /// bit0, 1: disable deposit(value is 1), 0: normal
+    /// bit1, 1: disable withdraw(value is 2), 0: normal
+    /// bit2, 1: disable swap(value is 4), 0: normal
     pub status: u8,
 
     pub lp_mint_decimals: u8,
@@ -91,7 +123,7 @@ pub struct PoolState {
     pub mint_0_decimals: u8,
     pub mint_1_decimals: u8,
 
-    /// lp mint supply
+    /// True circulating supply without burns and lock ups
     pub lp_supply: u64,
     /// The amounts of token_0 and token_1 that are owed to the liquidity provider.
     pub protocol_fees_token_0: u64,
@@ -102,11 +134,23 @@ pub struct PoolState {
 
     /// The timestamp allowed for swap in the pool.
     pub open_time: u64,
+    /// recent epoch
+    pub recent_epoch: u64,
+
+    /// Creator fee collect mode
+    /// 0: both token_0 and token_1 can be used as trade fees. It depends on what the input token is when swapping
+    /// 1: only token_0 as trade fee
+    /// 2: only token_1 as trade fee
+    pub creator_fee_on: u8,
+    pub enable_creator_fee: bool,
+    pub padding1: [u8; 6],
+    pub creator_fees_token_0: u64,
+    pub creator_fees_token_1: u64,
     /// padding for future updates
-    pub padding: [u64; 32],
+    pub padding: [u64; 28],
 }
 impl PoolState {
-    pub const LEN: usize = 8 + 10 * 32 + 1 * 5 + 8 * 6 + 8 * 32;
+    pub const LEN: usize = 8 + 10 * 32 + 1 * 5 + 8 * 7 + 1 * 2 + 6 * 1 + 2 * 8 + 8 * 28;
 }
 
 /// The element of observations in ObservationState
@@ -141,4 +185,14 @@ pub struct ObservationState {
 
 impl ObservationState {
     pub const LEN: usize = 8 + 1 + 2 + 32 + (Observation::LEN * OBSERVATION_NUM) + 8 * 4;
+}
+
+/// Holds the current owner of the factory
+#[account]
+#[derive(Default, Debug)]
+pub struct Permission {
+    /// authority
+    pub authority: Pubkey,
+    /// padding
+    pub padding: [u64; 30],
 }

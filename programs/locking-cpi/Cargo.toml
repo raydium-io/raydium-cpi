@@ -1,7 +1,7 @@
 [package]
 name = "raydium-locking-cpi"
 version = "0.1.0"
-description = "Created with Anchor"
+description = "CPI adapter for Raydium Locking"
 edition = "2021"
 
 [lib]

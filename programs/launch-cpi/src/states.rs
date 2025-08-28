@@ -7,6 +7,8 @@ pub const GLOBAL_CONFIG_SEED: &str = "global_config";
 pub const POOL_SEED: &str = "pool";
 pub const POOL_VAULT_SEED: &str = "pool_vault";
 pub const POOL_VESTING_SEED: &str = "pool_vesting";
+pub const PLATFORM_FEE_VAULT_AUTH_SEED: &str = "platform_fee_vault_auth_seed";
+pub const CREATOR_FEE_VAULT_AUTH_SEED: &str = "creator_fee_vault_auth_seed";
 
 pub const PLATFORM_CONFIG_SEED: &str = "platform_config";
 pub const NAME_SIZE: usize = 64;
@@ -55,10 +57,44 @@ pub struct GlobalConfig {
     pub padding: [u64; 16],
 }
 
+/// Represents the different states a pool can be in
+/// * Fund - Initial state where pool is accepting funds
+/// * Migrate - Pool funding has ended and waiting for migration
+/// * Trade - Pool migration is complete and amm trading is enabled
+#[derive(PartialEq, Eq, AnchorSerialize, AnchorDeserialize)]
+pub enum PoolStatus {
+    Fund,
+    Migrate,
+    Trade,
+}
+
+#[derive(PartialEq, Eq, AnchorSerialize, AnchorDeserialize)]
+pub enum MigrateType {
+    AMM,
+    CPSWAP,
+}
+
+pub enum TokenProgramFlag {
+    SPLTokenProgram,
+    TokenProgram2022,
+}
+
+pub enum TokenProgramBit {
+    BaseTokenProgram,
+    QuoteTokenProgram,
+}
+
+/// migrate to cpmm, creator fee on quote token or both token
+#[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug, PartialEq, Eq)]
+pub enum AmmCreatorFeeOn {
+    QuoteToken,
+    BothToken,
+}
+
 /// Represents the state of a trading pool in the protocol
 /// Stores all essential information about pool balances, fees, and configuration
 #[account]
-#[derive(Default, Debug)]
+#[derive(Debug)]
 pub struct PoolState {
     /// Account update epoch
     pub epoch: u64,
@@ -78,7 +114,7 @@ pub struct PoolState {
     /// Decimals of the pool quote token
     pub quote_decimals: u8,
 
-    /// Migrate to AMM or CpSwap
+    /// Migrate to AMM or CpSwap, 0: amm， 1: cpswap
     pub migrate_type: u8,
 
     /// Supply of the pool base token
@@ -144,8 +180,19 @@ pub struct PoolState {
     /// The creator of base token
     pub creator: Pubkey,
 
+    /// token program bits
+    /// bit0: base token program flag
+    ///     0: spl_token_program
+    ///     1: token_program_2022
+    ///
+    /// bit1: quote token program flag
+    ///     0: spl_token_program
+    ///     1: token_program_2022
+    pub token_program_flag: u8,
+    /// migrate to cpmm, creator fee on quote token or both token
+    pub amm_creator_fee_on: AmmCreatorFeeOn,
     /// padding for future updates
-    pub padding: [u64; 8],
+    pub padding: [u8; 62],
 }
 
 impl PoolState {
@@ -194,12 +241,70 @@ pub struct PlatformConfig {
     pub img: [u8; IMG_SIZE],
     /// The platform specifies the trade fee rate after migration to cp swap
     pub cpswap_config: Pubkey,
+    /// Creator fee rate
+    pub creator_fee_rate: u64,
+    /// If the base token belongs to token2022, then you can choose to support the transferfeeConfig extension, which includes permissions such as `transfer_fee_config_authority`` and `withdraw_withheld_authority`.
+    /// When initializing mint, `withdraw_withheld_authority` and `transfer_fee_config_authority` both belongs to the contract.
+    /// Once the token is migrated to AMM, the authorities will be reset to this value
+    pub transfer_fee_extension_auth: Pubkey,
     /// padding for future updates
-    pub padding: [u8; 224],
+    pub padding: [u8; 180],
+    /// The parameters for launching the pool
+    pub curve_params: Vec<PlatformCurveParam>,
+}
+impl PlatformConfig {
+    pub const MIN_LEN: usize =
+        8 + 8 + 32 * 2 + 8 * 4 + NAME_SIZE + WEB_SIZE + IMG_SIZE + 32 + 8 + 32 + 180 + 4;
 }
 
-impl PlatformConfig {
-    pub const LEN: usize = 8 + 8 + 32 * 2 + 8 * 4 + NAME_SIZE + WEB_SIZE + IMG_SIZE + 32 + 224;
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct PlatformCurveParam {
+    /// The epoch for update interval, 0 means not update
+    pub epoch: u64,
+    /// The curve params index
+    pub index: u8,
+    /// The global config address
+    pub global_config: Pubkey,
+    /// bonding curve param
+    pub bonding_curve_param: BondingCurveParam,
+    /// padding for future updates
+    pub padding: [u64; 50],
+}
+impl PlatformCurveParam {
+    pub const LEN: usize = 8 + 1 + 32 + BondingCurveParam::LEN + 8 * 50;
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct BondingCurveParam {
+    // curve params
+    /// Migrate to AMM or CpSwap, 0: amm， 1: cpswap，
+    /// Neither 0 nor 1: invalid
+    pub migrate_type: u8,
+    /// The migrate fee on, 0 means fee on the quote token, 1 means fee on both token
+    /// Neither 0 nor 1: invalid
+    pub migrate_cpmm_fee_on: u8,
+    /// The supply of the token,
+    /// 0: invalid
+    pub supply: u64,
+    /// The total base sell of the token
+    /// 0: invalid
+    pub total_base_sell: u64,
+    /// The total quote fund raising of the token
+    /// 0: invalid
+    pub total_quote_fund_raising: u64,
+    // vesting params
+    /// total amount of tokens to be unlocked
+    /// u64::MAX: invalid
+    pub total_locked_amount: u64,
+    /// Waiting time in seconds before unlocking after fundraising ends
+    /// u64::MAX: invalid
+    pub cliff_period: u64,
+    /// Unlocking period in seconds
+    /// u64::MAX: invalid
+    pub unlock_period: u64,
+}
+impl BondingCurveParam {
+    pub const LEN: usize = 2 + 8 * 6;
 }
 
 #[account]
@@ -327,4 +432,22 @@ pub struct PlatformParams {
     pub name: String,
     pub web: String,
     pub img: String,
+}
+
+/// Platform fee vault addres
+pub fn platform_fee_vault(platform_config: &Pubkey, quote_token_mint: &Pubkey) -> Pubkey {
+    let (expect_platform_fee_vault, bump) = Pubkey::find_program_address(
+        &[platform_config.as_ref(), quote_token_mint.as_ref()],
+        &crate::id(),
+    );
+    expect_platform_fee_vault
+}
+
+/// Creator fee vault address
+pub fn creator_fee_vault(creator: &Pubkey, quote_token_mint: &Pubkey) -> Pubkey {
+    let (expect_creator_fee_vault, bump) = Pubkey::find_program_address(
+        &[creator.as_ref(), quote_token_mint.key().as_ref()],
+        &crate::id(),
+    );
+    expect_creator_fee_vault
 }
