@@ -5,6 +5,7 @@ pub const POOL_LP_MINT_SEED: &str = "pool_lp_mint";
 pub const POOL_VAULT_SEED: &str = "pool_vault";
 pub const OBSERVATION_SEED: &str = "observation";
 pub const AMM_CONFIG_SEED: &str = "amm_config";
+pub const PERMISSION_SEED: &str = "permission";
 
 // Number of ObservationState element
 pub const OBSERVATION_NUM: usize = 100;
@@ -184,4 +185,14 @@ pub struct ObservationState {
 
 impl ObservationState {
     pub const LEN: usize = 8 + 1 + 2 + 32 + (Observation::LEN * OBSERVATION_NUM) + 8 * 4;
+}
+
+/// Holds the current owner of the factory
+#[account]
+#[derive(Default, Debug)]
+pub struct Permission {
+    /// authority
+    pub authority: Pubkey,
+    /// padding
+    pub padding: [u64; 30],
 }
