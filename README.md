@@ -12,7 +12,7 @@ Call CLMM through CPI.
 [dependencies]
 anchor-lang = "=0.31.1"
 anchor-spl = "=0.31.1"
-raydium-clmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-clmm-cpi" }
+raydium-clmm-cpi = { git = "https://github.com/raydium-io/raydium-cpi", package = "raydium-clmm-cpi", branch = "anchor-0.31.1" }
 ```
 
 Call CPMM through CPI.
