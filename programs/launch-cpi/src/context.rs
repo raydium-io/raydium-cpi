@@ -616,9 +616,6 @@ pub struct ClaimVestedToken<'info> {
 
     /// SPL Token program for the base token
     /// Must be the standard Token program
-    #[account(
-        address = spl_token::id()
-    )]
     pub base_token_program: Interface<'info, TokenInterface>,
 
     /// Required for account creation
