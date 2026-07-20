@@ -25,8 +25,8 @@ pub mod raydium_liquidity_locking {
     /// * `ctx` -  The context of accounts
     /// * `with_metadata` -  Create NFT with metadata or not
     ///
-    pub fn lock_clmm_position<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, LockClmmPosition<'info>>,
+    pub fn lock_clmm_position<'info>(
+        ctx: Context<'info, LockClmmPosition<'info>>,
         with_metadata: bool,
     ) -> Result<()> {
         Ok(())
@@ -37,8 +37,8 @@ pub mod raydium_liquidity_locking {
     ///
     /// * `ctx` -  The context of accounts
     ///
-    pub fn collect_clmm_fees_and_rewards<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, CollectClmmFeeAndReward<'info>>,
+    pub fn collect_clmm_fees_and_rewards<'info>(
+        ctx: Context<'info, CollectClmmFeeAndReward<'info>>,
     ) -> Result<()> {
         Ok(())
     }
@@ -51,8 +51,8 @@ pub mod raydium_liquidity_locking {
     /// * `lp_amount` -  The lp amount to lock
     /// * `with_metadata` -  Create NFT with metadata or not
     ///
-    pub fn lock_cp_liquidity<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, LockCpLiquidity<'info>>,
+    pub fn lock_cp_liquidity<'info>(
+        ctx: Context<'info, LockCpLiquidity<'info>>,
         lp_amount: u64,
         with_metadata: bool,
     ) -> Result<()> {
@@ -65,8 +65,8 @@ pub mod raydium_liquidity_locking {
     /// * `ctx` -  The context of accounts
     /// * `fee_lp_amount` -  The amount lp want to claim, please fill in u64::Max.
     ///
-    pub fn collect_cp_fees<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, CollectCpFee<'info>>,
+    pub fn collect_cp_fees<'info>(
+        ctx: Context<'info, CollectCpFee<'info>>,
         fee_lp_amount: u64,
     ) -> Result<()> {
         Ok(())

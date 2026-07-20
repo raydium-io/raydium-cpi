@@ -111,8 +111,8 @@ pub mod raydium_launchpad {
     /// * `minimum_amount_out` - Minimum amount of base token to receive (slippage protection)
     /// * `share_fee_rate` - Fee rate for the share
     ///
-    pub fn buy_exact_in<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, Swap<'info>>,
+    pub fn buy_exact_in<'info>(
+        ctx: Context<'info, Swap<'info>>,
         amount_in: u64,
         minimum_amount_out: u64,
         share_fee_rate: u64,
@@ -127,8 +127,8 @@ pub mod raydium_launchpad {
     /// * `amount_out` - Amount of base token to receive
     /// * `maximum_amount_in` - Maximum amount of quote token to purchase (slippage protection)
     /// * `share_fee_rate` - Fee rate for the share
-    pub fn buy_exact_out<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, Swap<'info>>,
+    pub fn buy_exact_out<'info>(
+        ctx: Context<'info, Swap<'info>>,
         amount_out: u64,
         maximum_amount_in: u64,
         share_fee_rate: u64,
@@ -144,8 +144,8 @@ pub mod raydium_launchpad {
     /// * `minimum_amount_out` - Minimum amount of quote token to receive (slippage protection)
     /// * `share_fee_rate` - Fee rate for the share
     ///
-    pub fn sell_exact_in<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, Swap<'info>>,
+    pub fn sell_exact_in<'info>(
+        ctx: Context<'info, Swap<'info>>,
         amount_in: u64,
         minimum_amount_out: u64,
         share_fee_rate: u64,
@@ -161,8 +161,8 @@ pub mod raydium_launchpad {
     /// * `maximum_amount_in` - Maximum amount of base token to purchase (slippage protection)
     /// * `share_fee_rate` - Fee rate for the share
     ///
-    pub fn sell_exact_out<'a, 'b, 'c: 'info, 'info>(
-        ctx: Context<'a, 'b, 'c, 'info, Swap<'info>>,
+    pub fn sell_exact_out<'info>(
+        ctx: Context<'info, Swap<'info>>,
         amount_out: u64,
         maximum_amount_in: u64,
         share_fee_rate: u64,

@@ -22,7 +22,7 @@ pub fn initialize<'a, 'b, 'c, 'info>(
     init_coin_amount: u64,
 ) -> Result<()> {
     let ix = native_instrcutions::initialize2(
-        ctx.program.key,
+        &ctx.program_id,
         ctx.accounts.amm.key,
         ctx.accounts.amm_authority.key,
         ctx.accounts.amm_open_orders.key,
@@ -69,7 +69,7 @@ pub fn deposit<'a, 'b, 'c, 'info>(
     base_side: u64,
 ) -> Result<()> {
     let ix = native_instrcutions::deposit(
-        ctx.program.key,
+        &ctx.program_id,
         ctx.accounts.amm.key,
         ctx.accounts.amm_authority.key,
         ctx.accounts.amm_open_orders.key,
@@ -109,7 +109,7 @@ pub fn withdraw<'a, 'b, 'c, 'info>(
     amount: u64,
 ) -> Result<()> {
     let ix = native_instrcutions::withdraw(
-        ctx.program.key,
+        &ctx.program_id,
         ctx.accounts.amm.key,
         ctx.accounts.amm_authority.key,
         ctx.accounts.amm_open_orders.key,
@@ -154,7 +154,7 @@ pub fn swap_base_in<'a, 'b, 'c, 'info>(
     minimum_amount_out: u64,
 ) -> Result<()> {
     let ix = native_instrcutions::swap_base_in(
-        ctx.program.key,
+        &ctx.program_id,
         ctx.accounts.amm.key,
         ctx.accounts.amm_authority.key,
         ctx.accounts.amm_open_orders.key,
@@ -196,7 +196,7 @@ pub fn swap_base_out<'a, 'b, 'c, 'info>(
     amount_out: u64,
 ) -> Result<()> {
     let ix = native_instrcutions::swap_base_out(
-        ctx.program.key,
+        &ctx.program_id,
         ctx.accounts.amm.key,
         ctx.accounts.amm_authority.key,
         ctx.accounts.amm_open_orders.key,

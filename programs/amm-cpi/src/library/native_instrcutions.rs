@@ -9,7 +9,6 @@ use anchor_lang::{
         instruction::{AccountMeta, Instruction},
         program_error::ProgramError,
         pubkey::Pubkey,
-        sysvar,
     },
 };
 use anchor_spl::{associated_token::spl_associated_token_account, token::spl_token};
@@ -395,9 +394,9 @@ pub fn initialize2(
     let accounts = vec![
         // spl & sys
         AccountMeta::new_readonly(spl_token::id(), false),
-        AccountMeta::new_readonly(spl_associated_token_account::id(), false),
+        AccountMeta::new_readonly(spl_associated_token_account::program::id(), false),
         AccountMeta::new_readonly(solana_program::system_program::id(), false),
-        AccountMeta::new_readonly(sysvar::rent::id(), false),
+        AccountMeta::new_readonly(solana_program::rent::id(), false),
         // amm
         AccountMeta::new(*amm_pool, false),
         AccountMeta::new_readonly(*amm_authority, false),
